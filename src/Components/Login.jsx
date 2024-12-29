@@ -1,11 +1,17 @@
-import { useContext } from "react";
+import { useContext} from "react";
 import { AuthContext } from "../Context/Context";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
 const Login = () => {
-    const {logIn}= useContext(AuthContext);
-    const navigate = useNavigate();
+    const {user,logIn}= useContext(AuthContext);
+    const navigate = useNavigate();   
+        if(user?.email === "admin@gmail.com"){
+            navigate("/adminDashboard");
+        }else{
+            navigate("/employeeDashboard");
+        }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const email = e.target.email.value;
