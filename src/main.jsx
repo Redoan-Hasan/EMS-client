@@ -8,6 +8,10 @@ import AdminDashboard from "./Components/AdminDashboard.jsx";
 import EmployeeList from "./Components/EmployeeList.jsx";
 import CreateTask from "./Components/CreateTask.jsx";
 import CreateEmployee from "./Components/CreateEmployee.jsx";
+import EmployeeDashboard from "./Components/EmployeeDashboard.jsx";
+import PendingTasks from "./Components/PendingTasks.jsx";
+import CompletedTasks from "./Components/CompletedTasks.jsx";
+import PrivateRoute from "./Components/PrivateRoute.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -15,7 +19,11 @@ createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/adminDashboard" element={<AdminDashboard />}>
+          <Route path="/employeeDashboard" element={<PrivateRoute><EmployeeDashboard /></PrivateRoute>}>
+            <Route index element={<PendingTasks/>} />
+            <Route path="completedTask" element={<CompletedTasks />} />
+          </Route>
+          <Route path="/adminDashboard" element={<PrivateRoute><AdminDashboard /></PrivateRoute>}>
             <Route index element={<EmployeeList/>} />
             <Route path="createTask" element={<CreateTask />} />
             <Route path="createEmployee" element={ <CreateEmployee />} />

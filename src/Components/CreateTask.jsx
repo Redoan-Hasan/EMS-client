@@ -1,9 +1,40 @@
+import axios from "axios";
+import { useState } from "react";
+import Swal from "sweetalert2";
+
     const CreateTask = () => {
+    const [tasks, setTasks] = useState([]);
+    console.log(tasks);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const taskTitle = e.target.taskTitle.value; 
+        const email = e.target.email.value;
+        const date = e.target.date.value;
+        const category = e.target.category.value;
+        const description = e.target.description.value;
+        const priority = e.target.priority.value;
+        console.log(taskTitle,email,date,category,description,priority);
+        const newTask = { taskTitle, email, date, category, description, priority };
+        axios.post("http://localhost:5000/addTask", newTask)
+        .then((res) => {
+            console.log(res.data);
+            setTasks(res.data);
+            e.target.reset();
+            Swal.fire({
+                icon: "success",
+                title: "Task Created",
+                text: "Task Created Successfully",
+            });
+        })
+        .catch((err) => {
+            console.log(err);    
+        });
+    };
     return (
         <div>
             <div className="border-2 border-blue-400 p-10 my-10 rounded-lg">
                 <h1 className="text-5xl font-extrabold text-center my-5">Create Task</h1>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="flex flex-col md:flex-row lg:flex-row gap-9">
                     <div className="w-full md:w-2/4lg:w-2/4">
                         <div className="form-control py-2 font-raleway">
@@ -27,7 +58,7 @@
                         <input
                             name="email"
                             type="email"
-                            placeholder="Enter the email"
+                            placeholder="Enter the employee email"
                             className=" text-semibold text-lg outline-none bg-transparent border-emerald-300 w-full p-2 border-2 text-white rounded-full placeholder:text-xl placeholder:text-semibold placeholder:text-white"
                             required
                         />
@@ -55,7 +86,7 @@
                         <input
                             name="category"
                             type="text"
-                            placeholder="Enter Rating"
+                            placeholder="Design, Development etc."
                             className=" text-semibold text-lg outline-none bg-transparent border-emerald-300 w-full p-2 border-2 text-white rounded-full placeholder:text-xl placeholder:text-semibold placeholder:text-white "
                             required
                         />
@@ -93,7 +124,7 @@
                         </label>
                         <textarea
                             name="description"
-                            placeholder="Description"
+                            placeholder="Enter the Description"
                             className=" text-semibold text-lg outline-none bg-transparent border-emerald-300 w-full p-2 border-2 text-white rounded-lg placeholder:text-xl placeholder:text-semibold placeholder:text-white "
                             rows="5"
                             required

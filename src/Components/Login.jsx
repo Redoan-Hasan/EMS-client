@@ -1,8 +1,11 @@
 import { useContext } from "react";
 import { AuthContext } from "../Context/Context";
+import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
 const Login = () => {
     const {logIn}= useContext(AuthContext);
+    const navigate = useNavigate();
     const handleSubmit = (e) => {
         e.preventDefault();
         const email = e.target.email.value;
@@ -12,9 +15,20 @@ const Login = () => {
         .then((user) => {
             console.log(user);
             e.target.reset();
+            if(user.user?.email === "admin@gmail.com"){
+                navigate("/adminDashboard")
+            }
+            else{
+                navigate("/employeeDashboard")
+            }
         })
         .catch((error) => {
             console.log(error);
+            Swal.fire({
+                icon: "error",
+                title: "YOU BETTER FO...",
+                text: "You are not an employee",
+            });
         })
     };
     return (

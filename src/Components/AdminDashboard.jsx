@@ -25,7 +25,7 @@ import { AuthContext } from "../Context/Context";
             Logout
             </Link>
         </div>
-        <div><h1 className="text-4xl font-extrabold mx-auto my-14 border-b-4 w-fit">Admin Dashboard</h1></div>
+        <div><h1 className="text-5xl font-extrabold bg-gradient-to-r from-orange-700 via-blue-500 to-green-400 text-transparent bg-clip-text animate-gradient mx-auto my-14 w-fit">Admin Dashboard</h1></div>
         <div className="my-5">
             <div className="flex items-center justify-center text-center  flex-nowrap w-full">
                 <Link to="" onClick={() => setTabIdx(0)} rel="noopener noreferrer" href="#" className={`px-5 py-3   w-full ${tabIdx === 0 ? 'border-4 border-b-0 rounded-t-lg' : 'border-b-4'}`}>

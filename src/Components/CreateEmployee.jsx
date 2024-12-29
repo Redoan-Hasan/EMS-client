@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { AuthContext } from "../Context/Context";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 
 const CreateEmployee = () => {
@@ -13,6 +14,7 @@ const CreateEmployee = () => {
         const password = e.target.password.value;    
         const photoUrl = e.target.photoUrl.value;
         console.log(name,email,password,photoUrl);
+        const newEmployee = {name,email,password,photoUrl};
         register(email,password,photoUrl)
         .then((user) => {
             console.log(user);
@@ -24,6 +26,13 @@ const CreateEmployee = () => {
                     title: "Employee Created",
                     text: "Employee Created Successfully",
                 });
+                axios.post("http://localhost:5000/addEmployee", newEmployee)
+                .then((res) => {
+                    console.log(res);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
             })
         })
         .catch((error) => {

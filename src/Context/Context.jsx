@@ -7,13 +7,16 @@ import app from "../Firebase/firebase.config"
 export const AuthContext = createContext()
 const Context = ({children}) => {
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
     console.log(user);
     const auth = getAuth(app);
     const logIn = (email, password) => {
+        setLoading(true);
         return signInWithEmailAndPassword(auth,email,password)
     };
 
     const register = (email, password) => {
+        setLoading(true);
         return createUserWithEmailAndPassword(auth,email,password)
     };
 
@@ -25,18 +28,20 @@ const Context = ({children}) => {
     }
 
     const logOut = () => {
+        setLoading(true);
         return auth.signOut()
     }
 
     useEffect(() => {
         const unSubscrible =onAuthStateChanged(auth,(user) => {
             setUser(user)
+            setLoading(false);
         })
         return () => unSubscrible()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const authInfo = {user,register,logIn,updatePhoto,logOut}
+    const authInfo = {user,register,logIn,updatePhoto,logOut ,loading}
     return (
         <AuthContext.Provider value={authInfo}>
             {children}
