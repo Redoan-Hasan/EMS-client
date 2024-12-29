@@ -1,10 +1,13 @@
 import {  useContext, useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Context/Context";
+import axios from "axios";
 
 const EmployeeDashboard = () => {
     const {user,logOut}= useContext(AuthContext);
     const [tabIdx, setTabIdx] = useState(0);
+    const[pendingTasks, setPendingTasks] = useState([]);
+    const[completedTasks, setCompletedTasks] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
     useEffect(() => {
@@ -16,7 +19,29 @@ const EmployeeDashboard = () => {
     }
     }, [location.pathname]);
 
-    
+    useEffect(() => {
+        axios.get(`http://localhost:5000/addTask?email=${user.email}`)
+        .then(res => {
+            console.log(res.data);
+            setPendingTasks(res.data);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pendingTasks]);
+
+    useEffect(() => {
+        axios.get(`http://localhost:5000/completedTask?email=${user.email}`)
+        .then(res => {
+            console.log(res.data);
+            setCompletedTasks(res.data);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [completedTasks]);
 
 
     return (
@@ -26,6 +51,16 @@ const EmployeeDashboard = () => {
                 <button onClick={() =>{logOut(); navigate("/")}} className="btn btn-error text-white text-xl font-semibold rounded-lg">Logout</button>
             </div>
             <div><h1 className="text-5xl font-extrabold bg-gradient-to-r from-orange-700 via-blue-500 to-green-400 text-transparent bg-clip-text animate-gradient mx-auto my-14 w-fit">Employee Dashboard</h1></div>
+            <div className="flex flex-col md:flex-row lg:flex-row  justify-around items-center gap-3 my-10">
+                <div className="bg-sky-400 w-[300px]  text-white p-5 rounded-lg flex flex-col justify-between items-center">
+                    <h1 className="text-3xl font-bold">Pending Tasks : </h1>
+                    <h1 className="text-5xl text-white font-extrabold">{pendingTasks?.length}</h1>
+                </div>
+                <div className="bg-yellow-400 w-[300px]  text-white p-5 rounded-lg flex flex-col justify-between items-center">
+                    <h1 className="text-3xl font-bold">Completed Tasks : </h1>
+                    <h1 className="text-5xl text-white font-extrabold">{completedTasks?.length}</h1>
+                </div>
+            </div>
             <div className="my-5">
                 <div className="flex items-center justify-center text-center  flex-nowrap w-full">
                     <Link to=" " onClick={() => setTabIdx(0)} rel="noopener noreferrer"  className={`px-5 py-3   w-full ${tabIdx === 0 ? 'border-4 border-b-0 rounded-t-lg' : 'border-b-4'}`}>
