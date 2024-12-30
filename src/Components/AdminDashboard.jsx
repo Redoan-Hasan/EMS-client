@@ -29,7 +29,7 @@ import { AuthContext } from "../Context/Context";
         <div className="my-5">
             <div className="flex items-center justify-center text-center  flex-nowrap w-full">
                 <Link to="" onClick={() => setTabIdx(0)} rel="noopener noreferrer" href="#" className={`px-5 py-3   w-full ${tabIdx === 0 ? 'border-4 border-b-0 rounded-t-lg' : 'border-b-4'}`}>
-                    <span className="text-xl font-semibold">Employee List</span>
+                    <span className="text-xl font-semibold">List</span>
                 </Link>
                 <Link to="createEmployee" onClick={() => setTabIdx(1)} rel="noopener noreferrer" href="#" className={`px-5 py-3  w-full ${tabIdx === 1 ? 'border-4 border-b-0 rounded-t-lg' : 'border-b-4'}`}>
                     <span className="text-xl font-semibold">Create Employee</span>
