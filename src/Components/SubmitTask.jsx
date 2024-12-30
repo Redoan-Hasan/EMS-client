@@ -42,13 +42,6 @@ const SubmitTask = () => {
               title: "Task Submitted",
               text: "Task Submitted Successfully",
             });
-            // Swal.fire({
-            //   position: "top-end",
-            //   icon: "success",
-            //   title: "Your work has been saved",
-            //   showConfirmButton: false,
-            //   timer: 1500
-            // });
             navigate("/employeeDashboard");
             window.location.reload();
           });
