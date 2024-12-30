@@ -29,7 +29,6 @@ const SubmitTask = () => {
     const { _id, ...taskWithOutId } = submittedTask;
     const completedTask = { ...taskWithOutId, taskSubmitLink };
     console.log(completedTask);
-
     axios
       .post("https://ems-server-eight.vercel.app/completedTask", completedTask)
       .then((res) => {
@@ -43,7 +42,15 @@ const SubmitTask = () => {
               title: "Task Submitted",
               text: "Task Submitted Successfully",
             });
+            // Swal.fire({
+            //   position: "top-end",
+            //   icon: "success",
+            //   title: "Your work has been saved",
+            //   showConfirmButton: false,
+            //   timer: 1500
+            // });
             navigate("/employeeDashboard");
+            window.location.reload();
           });
       })
       .catch((err) => {
